@@ -20,8 +20,6 @@
     --accent-soft: #e8f0fd;
     --success: #2a5d3a;
 
-    /* Adjust this to move the button vertically on your page (0% = top, 100% = bottom) */
-    --btn-top: 58%;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -33,77 +31,9 @@
     -webkit-font-smoothing: antialiased;
     line-height: 1.5;
     font-feature-settings: 'ss01', 'ss02';
-    /* Click-through when idle so Framer elements underneath remain interactive */
     pointer-events: none;
     height: 100%;
     overflow: hidden;
-  }
-
-  /* ============ THE CTA BUTTON ============ */
-  .trigger-wrap {
-    position: fixed;
-    left: 50%;
-    top: var(--btn-top);
-    transform: translate(-50%, -50%);
-    pointer-events: auto;
-    z-index: 10;
-  }
-
-  .onboarding-cta {
-    display: inline-flex;
-    align-items: center;
-    gap: 14px;
-    background: var(--card);
-    border: 1px solid var(--line);
-    border-radius: 100px;
-    padding: 8px 8px 8px 20px;
-    font-size: 14px;
-    color: var(--ink-soft);
-    box-shadow: 0 2px 12px rgba(6,7,27,0.04);
-    transition: all 0.2s ease;
-    cursor: pointer;
-    font-family: inherit;
-  }
-  .onboarding-cta:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 8px 20px rgba(6,7,27,0.08);
-    border-color: var(--ink);
-  }
-  .onboarding-cta-label { font-weight: 400; }
-  .onboarding-cta-label strong { font-weight: 600; color: var(--ink); }
-  .onboarding-cta-badge {
-    background: var(--ink);
-    color: #faf8f3;
-    padding: 8px 14px;
-    border-radius: 100px;
-    font-size: 13px;
-    font-weight: 500;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    transition: background 0.2s;
-  }
-  .onboarding-cta:hover .onboarding-cta-badge { background: var(--accent); }
-  .onboarding-cta-badge-time { font-size: 11px; opacity: 0.7; letter-spacing: 0.04em; }
-
-  /* Pulse dot */
-  .pulse-dot {
-    width: 7px; height: 7px;
-    background: var(--accent);
-    border-radius: 50%;
-    position: relative;
-  }
-  .pulse-dot::after {
-    content: '';
-    position: absolute;
-    inset: -4px;
-    border-radius: 50%;
-    border: 1px solid var(--accent);
-    animation: pulseRing 2s ease-out infinite;
-  }
-  @keyframes pulseRing {
-    0% { transform: scale(0.8); opacity: 1; }
-    100% { transform: scale(1.8); opacity: 0; }
   }
 
   /* ============ MODAL ============ */
@@ -386,17 +316,6 @@
 </style>
 </head>
 <body>
-
-<!-- Button that triggers the wizard -->
-<div class="trigger-wrap">
-  <button class="onboarding-cta" onclick="openModal()">
-    <span class="pulse-dot"></span>
-    <span class="onboarding-cta-label">Ny her? <strong>Finn din vei inn</strong></span>
-    <span class="onboarding-cta-badge">
-      Start <span class="onboarding-cta-badge-time">· 30 SEK</span>
-    </span>
-  </button>
-</div>
 
 <!-- Modal overlay -->
 <div class="modal-backdrop" id="backdrop" onclick="handleBackdropClick(event)">
@@ -803,6 +722,11 @@
   function restart() { state.step = 0; state.role = null; state.experience = null; state.context = null; render(); }
 
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+
+  // Triggered by button on the Framer page via postMessage
+  window.addEventListener('message', (e) => {
+    if (e.data === 'openRolleveileder') openModal();
+  });
 </script>
 </body>
 </html>
