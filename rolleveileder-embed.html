@@ -704,13 +704,20 @@
     return `<div class="step result"><div class="modal-head"><div class="eyebrow"><span class="eyebrow-dot"></span>Din vei inn</div><h2>${r.headline}</h2><p class="result-intro-text">${r.intro}</p></div><div class="resources">${resHtml}</div><div class="cta-card"><div class="cta-label">For deg som ikke er medlem</div><h3>${r.ctaHeading}</h3><p>${r.ctaBody}</p><div class="cta-buttons"><button class="btn-primary">Bli medlem →</button><button class="btn-secondary">Book prat →</button></div></div><div class="result-foot"><button class="back-link" onclick="restart()">↺ Start på nytt</button><span>Få ressursene på <a href="#">e-post</a></span></div></div>`;
   }
 
+  function notifyParent(msg) {
+    try { window.parent.postMessage(msg, '*'); } catch(e) {}
+    try { window.top.postMessage(msg, '*'); } catch(e) {}
+  }
+
   function openModal() {
     document.getElementById('backdrop').classList.add('active');
+    notifyParent('rolleveileder_opened');
     state.step = 0; state.role = null; state.experience = null; state.context = null;
     render();
   }
   function closeModal() {
     document.getElementById('backdrop').classList.remove('active');
+    notifyParent('rolleveileder_closed');
   }
   function handleBackdropClick(e) {
     if (e.target.id === 'backdrop') closeModal();
