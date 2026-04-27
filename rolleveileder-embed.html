@@ -257,24 +257,16 @@
   .resource-arrow { color: var(--ink-muted); font-size: 16px; }
 
   .cta-card {
-    background: var(--ink);
-    color: #faf8f3;
+    background: var(--paper);
+    color: var(--ink);
     border-radius: 14px;
     padding: 20px;
-    position: relative;
-    overflow: hidden;
+    border: 1.5px solid var(--ink);
     margin-bottom: 16px;
   }
-  .cta-card::before {
-    content: '';
-    position: absolute; inset: 0;
-    background: radial-gradient(circle at 100% 0%, rgba(50,120,242,0.28), transparent 55%);
-    pointer-events: none;
-  }
-  .cta-card > * { position: relative; }
   .cta-label { font-size: 10.5px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); font-weight: 600; margin-bottom: 10px; }
   .cta-card h3 { font-weight: 600; font-size: 19px; letter-spacing: -0.015em; line-height: 1.2; margin-bottom: 8px; }
-  .cta-card p { color: rgba(250,248,243,0.72); font-size: 13px; line-height: 1.5; margin-bottom: 16px; }
+  .cta-card p { color: var(--ink-soft); font-size: 13px; line-height: 1.5; margin-bottom: 16px; }
   .cta-buttons { display: flex; gap: 8px; }
   .btn-primary {
     flex: 1; background: var(--accent); color: #fff;
@@ -285,14 +277,14 @@
   }
   .btn-primary:hover { background: #1e5fd1; }
   .btn-secondary {
-    background: transparent; color: #faf8f3;
+    background: transparent; color: var(--ink);
     padding: 11px 14px; border-radius: 30px;
-    border: 1px solid rgba(250,248,243,0.3);
+    border: 1px solid var(--line-strong);
     font-family: inherit; font-weight: 500; font-size: 13.5px;
     cursor: pointer; transition: all 0.15s;
     display: flex; align-items: center; justify-content: center; gap: 6px;
   }
-  .btn-secondary:hover { border-color: rgba(250,248,243,0.7); }
+  .btn-secondary:hover { border-color: var(--ink); }
 
   .result-foot {
     display: flex; justify-content: space-between; align-items: center;
@@ -687,7 +679,7 @@
       else if (i === state.step) cls = 'active';
       return `<span class="${cls}"></span>`;
     }).join('');
-    const timeLeft = [30, 20, 10][state.step] || 10;
+    const timeLeft = [20, 15, 10][state.step] || 10;
     const optsHtml = options.map(opt => {
       if (variant === 'exp') {
         return `<button class="option" onclick="${onSelect}('${opt.id}')"><div class="option-icon">${opt.icon}</div><div class="option-text"><div class="option-label">${opt.label}</div>${opt.desc ? `<div class="option-desc">${opt.desc}</div>` : ''}</div></button>`;
